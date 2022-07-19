@@ -168,21 +168,9 @@ end
         %00001100
         %00000000
 end
- player0color:
-    $46;
-    $46;
-    $46;
-    $46;
-    $46;
-    $46;
-    $46;
-    $46;
-    $C8;
-    $C6;
-    $00;
-end
-  
+ 
 mainloop
+ COLUP0 = $46
  drawscreen
  player0y = player0y + 1
  if joy0right then if player0x < 130 then player0x = player0x + 1

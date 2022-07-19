@@ -2306,18 +2306,16 @@ pflabel2
 	STA player0pointerhi
 	LDA #10
 	STA player0height
-.L071 ;  player0color:
-
-	LDX #<playercolorL071_0
-	STX player0color
-	LDA #>playercolorL071_0
-	STA player0color+1
 .
  ; 
 
 .mainloop
  ; mainloop
 
+.L071 ;  COLUP0  =  $46
+
+	LDA #$46
+	STA COLUP0
 .L072 ;  drawscreen
 
  jsr drawscreen
@@ -2399,23 +2397,6 @@ playerL070_0
 	.byte         %00011000
 	.byte         %00001100
 	.byte         %00000000
- if (<*) > (<(*+10))
-	repeat ($100-<*)
-	.byte 0
-	repend
-	endif
-playercolorL071_0
-	.byte     $46;
-	.byte     $46;
-	.byte     $46;
-	.byte     $46;
-	.byte     $46;
-	.byte     $46;
-	.byte     $46;
-	.byte     $46;
-	.byte     $C8;
-	.byte     $C6;
-	.byte     $00;
  if ECHOFIRST
        echo "    ",[(scoretable - *)]d , "bytes of ROM space left")
  endif 
