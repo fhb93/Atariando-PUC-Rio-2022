@@ -3,6 +3,6 @@
 -------------------------------------------------------
 # Ringo 2600
 ### The GDD
-Em terra esplêndida, uma maçã cai eternamente,
+Em terra esplêndida, uma maçã cai eternamente,<br>
 Esquivando-se das espadadas letais de aprendizes.
 ### END-GDD :D
