@@ -128,15 +128,15 @@ end
   $26
   $26
 end
- counter = 140
-
+ counter = 180
+ 
 cutscene
  drawscreen
- 
  if counter > 0 then counter = counter - 1 else goto mainsetup
  goto cutscene
 
 mainsetup
+ sounda = 0
  missile1height = 2
  missile1x = 75
  missile1y = 50
@@ -190,7 +190,8 @@ mainloop
  COLUP0 = $46
  COLUP1 = $0E
  NUSIZ1 = $30
- 
+ ; desembainhando a espada (WIP)
+ if sounda < 3 then AUDV0 = sounda : AUDC0 = 8 : AUDF0 = 4 : sounda = sounda + 1
   ; if missile1x < h then missile1x = missile1x + d + d else missile1x = (rand&63) : missile1y = (rand&127) + 12
  
  ; if e > 10 && e < 100 && f > 15 && f < 140 then missile1x = e : missile1y = f else e = rand16 : f = rand16
