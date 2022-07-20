@@ -1,4 +1,4 @@
- rem Generated 7/19/2022 12:42:29 PM by Visual bB Version 1.0.0.568
+ rem Generated 7/20/2022 07:10:21 PM by Visual bB Version 1.0.0.568
  rem **********************************
  rem *<Ringo 2600>                    *
  rem *<description>                   *
@@ -7,7 +7,8 @@
  rem *<free>	                      *
  rem **********************************
 
- set kernel_options pfcolors romsize 4k
+ set kernel_options pfcolors 
+ set romsize 4k
  set tv ntsc
  include 6lives_statusbar.asm
  statusbarlength = 144
@@ -60,51 +61,26 @@ start_restart
 
  rem title ........................................................................
 
-titlescreen
+SubTitleLoop
+   if joy0fire then goto main
+   gosub drawlogo
+   goto SubTitleLoop
 
- scorecolor = $1E
- statusbarcolor = $00
- COLUBK = $00
-
-      playfield:
-..X...X....X..XXX........XXXXXXX
-XXXXXXXXX.XXXX.X.X..XXX....X...X
-.XXX.XXX...XX.XXX..X.X.X.XXX...X
-X.X.X.X.X.XX.XXXXX.X..X...X.X..X
-..X...X....X.X.X.X.......X....X.
-................................
-.............X..................
-....X..XX.XX.X.XX...............
-...X.X.X..X..X.XX...............
-..........XX.X..X..X.X.XX.XX....
-.........XX..X.X.X..X..XX.X.....
-end 
-
- pfcolors:
-   $26
-   $28
-   $2A
-   $2C
-   $2E
-   $0E
-   $0E
-   $0E
-   $0E
-   $0E
-   $0E
-end
-
- drawscreen
-
- if joy0fire then goto main 
- goto titlescreen
+SubMainLoop
+   COLUPF=$0E
+   drawscreen
+   goto SubMainLoop
+   inline abb.asm
 
  rem main_mainsetup........................................................................
 
  rem mainloop  .........................................................................
 
 main 
- 
+ scorecolor = $1E
+ statusbarcolor = $00
+ COLUBK = $00
+
  playfield:
  .............XXXXXXXXXXXXXXXXXXX
  ...........XXXXXXXXXXXXXXXXXXXXX
@@ -233,14 +209,52 @@ mainloop
  ; if player0y < 150 then player0y = player0y + d else statusbarlength = statusbarlength - 20 : player0y = 0 : player0x = (rand&127)+20
  if player0y > 150 then statusbarlength = statusbarlength - 20 : player0y = 0 : f = 150 : player0x = (rand&127)+20 : COLUBK = $0E
 
-
- 
  drawscreen
  NUSIZ1 = $10
  COLUBK = $00
 
-
  ; se o jogador perdeu as 7 vidas, fazer o game over mais epico depois
- if statusbarlength = 0 then reboot
+ if statusbarlength = 0 then goto gameover
 
  goto mainloop
+
+gameover
+ COLUP0 = $00
+ COLUP1 = $00
+ missile1y = 200
+
+ playfield:
+ ................................
+ ................................
+ ................................
+ .XXX.XX..X.X.XXX..XX.X.X.XXX.XX.
+ .X...X.X.XXX.X.X.X.X.X.X.X.X.X..
+ .X.X.XXX.X.X.XX..X.X.X.X.XX..X..
+ .X.X.X.X.X.X.X...X.X.XX..X...X..
+ ..XX.X.X.X.X.XXX.XX..X...XXX.X..
+ ................................
+ ................................
+ ................................
+end
+ 
+ pfcolors:
+  $2E
+  $2C
+  $2A
+  $28
+  $26
+  $24
+  $22
+  $20
+  $0E
+  $0E
+  $0E
+end
+ 
+ if joy0fire then counter = counter + 1 else counter = 0
+ if counter > 50 then reboot
+ if switchreset then reboot
+
+ drawscreen
+
+ goto gameover 
