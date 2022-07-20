@@ -2,7 +2,11 @@
 ## Atariando Workshop with Guix &amp; Baffa
 -------------------------------------------------------
 # Ringo 2600
+## Time
+- Felipe Holanda
+- Tomaz Neves
+-------------------------------------------------------
 ### The GDD
-Em terra esplêndida, uma maçã cai eternamente,<br>
-Esquivando-se das espadadas letais de aprendizes.
+Em árvores de terra esplêndida, maçãs caem eternamente,<br>
+Eis excelente exercício para aspirantes do caminho da Espada.
 ### END-GDD :D
