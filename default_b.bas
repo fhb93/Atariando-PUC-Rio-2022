@@ -153,7 +153,8 @@ mainsetup
  COLUPF = $00
  statusbarcolor = $CE
  statusbarlength = 120
-
+ NUSIZ1 = $10
+ 
  playfield:
  ................................
  ................................
@@ -187,18 +188,21 @@ end
  ; counter acumulador de 1 segundo
 
 mainloop
+ ; gravidade
+ g = g + 1
  counter = counter + 1
  COLUP0 = $46
  COLUP1 = $0E
- NUSIZ1 = $30
+ 
  AUDV0 = sounda
  AUDC0 = 8
  AUDF0 = 3
 
- ; AUDF0 = 3 or 7
- 
+ ; queda da maca #1
+ if g > 1 then player0y = player0y + d : g = 0
+
  ; fade out do corte
- if sounda > 0 then e = e + 1
+ if sounda > 0 then e = e + 1 : NUSIZ1 = $30
  if e > 10 then e = 0 : sounda = sounda - 1
 
  ; contagem dos segundos a cada 60 frames, os b segundos sao incrementados
@@ -209,21 +213,23 @@ mainloop
  ; movimentar a mira da espada
  if joy0right then if missile1x < 106 then missile1x = missile1x + 4
  if joy0left then if missile1x > 14 then missile1x = missile1x - 4
- if joy0up then if missile1y > 8 then missile1y = missile1y - 4 
- if joy0down then if missile1y < 146 then missile1y = missile1y + 4
+ if joy0up then if missile1y > 16 then missile1y = missile1y - 2
+ if joy0down then if missile1y < 148 then missile1y = missile1y + 2
+
 
  ; fazer o corte
- if joy0fire then COLUP1 = $FE : sounda = 4 : if missile1x < 130 then missile1x = missile1x + 16
+ if joy0fire then COLUP1 = $FE : sounda = 4 : if missile1x < 130 then missile1x = missile1x + 8
 
  ; checagem se houve colisao e o jogador estava pressionando o botao de disparo
  if collision(player0, missile1) && joy0fire then score = score + 1 : player0y = 0 : player0x = (rand&127)+20
 
 
- ; maca caindo, se ela cair no chao, jogador perde uma das suas 7 vidas
- if player0y < 150 then player0y = player0y + d else statusbarlength = statusbarlength - 20 : player0y = 0 : player0x = (rand&127)+20
+ ; queda da maca #2, se ela cair no chao, jogador perde uma das suas 7 vidas
+ ; if player0y < 150 then player0y = player0y + d else statusbarlength = statusbarlength - 20 : player0y = 0 : player0x = (rand&127)+20
+ if player0y > 150 then statusbarlength = statusbarlength - 20 : player0y = 0 : player0x = (rand&127)+20
+ 
  drawscreen
- ; if collision(player0, missile1) then if statusbarlength > 0 then statusbarlength = statusbarlength - 1 : goto mainloop
-
+ NUSIZ1 = $10
  ; se o jogador perdeu as 7 vidas, fazer o game over mais epico depois
  if statusbarlength = 0 then reboot
 
