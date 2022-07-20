@@ -147,6 +147,7 @@ mainsetup
  b = 0
  b = 0
  d = 1
+ e = 0
  player0x = 90
  player0y = 15
  COLUPF = $00
@@ -190,14 +191,17 @@ mainloop
  COLUP0 = $46
  COLUP1 = $0E
  NUSIZ1 = $30
- ; desembainhando a espada (WIP)
- if sounda < 3 then AUDV0 = sounda : AUDC0 = 8 : AUDF0 = 4 : sounda = sounda + 1
-  ; if missile1x < h then missile1x = missile1x + d + d else missile1x = (rand&63) : missile1y = (rand&127) + 12
+ AUDV0 = sounda
+ AUDC0 = 8
+ AUDF0 = 3
+
+ ; AUDF0 = 3 or 7
  
- ; if e > 10 && e < 100 && f > 15 && f < 140 then missile1x = e : missile1y = f else e = rand16 : f = rand16
+ ; fade out do corte
+ if sounda > 0 then e = e + 1
+ if e > 10 then e = 0 : sounda = sounda - 1
 
  ; contagem dos segundos a cada 60 frames, os b segundos sao incrementados
-
  if counter > 60 then b = b + 1 : counter = 0
  ; a cada 30 segundos, aumentar a velocidade da queda da maca
  if b > 30 then b = 0 : d = d + 1
@@ -209,10 +213,12 @@ mainloop
  if joy0down then if missile1y < 146 then missile1y = missile1y + 4
 
  ; fazer o corte
- if joy0fire then COLUP1 = $FE : if missile1x < 130 then missile1x = missile1x + 16
- 
+ if joy0fire then COLUP1 = $FE : sounda = 4 : if missile1x < 130 then missile1x = missile1x + 16
+
  ; checagem se houve colisao e o jogador estava pressionando o botao de disparo
  if collision(player0, missile1) && joy0fire then score = score + 1 : player0y = 0 : player0x = (rand&127)+20
+
+
  ; maca caindo, se ela cair no chao, jogador perde uma das suas 7 vidas
  if player0y < 150 then player0y = player0y + d else statusbarlength = statusbarlength - 20 : player0y = 0 : player0x = (rand&127)+20
  drawscreen
