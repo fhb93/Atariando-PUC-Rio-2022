@@ -128,7 +128,7 @@ end
   $26
   $26
 end
- counter = 120
+ counter = 140
 
 cutscene
  drawscreen
@@ -147,10 +147,6 @@ mainsetup
  b = 0
  b = 0
  d = 1
- e = 75
- f = 50
- g = rand16
- h = 100 
  player0x = 90
  player0y = 15
  COLUPF = $00
@@ -199,20 +195,29 @@ mainloop
  
  ; if e > 10 && e < 100 && f > 15 && f < 140 then missile1x = e : missile1y = f else e = rand16 : f = rand16
 
- 
+ ; contagem dos segundos a cada 60 frames, os b segundos sao incrementados
+
  if counter > 60 then b = b + 1 : counter = 0
+ ; a cada 30 segundos, aumentar a velocidade da queda da maca
  if b > 30 then b = 0 : d = d + 1
+
+ ; movimentar a mira da espada
  if joy0right then if missile1x < 106 then missile1x = missile1x + 4
  if joy0left then if missile1x > 14 then missile1x = missile1x - 4
  if joy0up then if missile1y > 8 then missile1y = missile1y - 4 
  if joy0down then if missile1y < 146 then missile1y = missile1y + 4
+
+ ; fazer o corte
  if joy0fire then COLUP1 = $FE : if missile1x < 130 then missile1x = missile1x + 16
+ 
+ ; checagem se houve colisao e o jogador estava pressionando o botao de disparo
  if collision(player0, missile1) && joy0fire then score = score + 1 : player0y = 0 : player0x = (rand&127)+20
+ ; maca caindo, se ela cair no chao, jogador perde uma das suas 7 vidas
  if player0y < 150 then player0y = player0y + d else statusbarlength = statusbarlength - 20 : player0y = 0 : player0x = (rand&127)+20
  drawscreen
  ; if collision(player0, missile1) then if statusbarlength > 0 then statusbarlength = statusbarlength - 1 : goto mainloop
 
-
+ ; se o jogador perdeu as 7 vidas, fazer o game over mais epico depois
  if statusbarlength = 0 then reboot
 
  goto mainloop
