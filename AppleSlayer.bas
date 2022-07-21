@@ -76,7 +76,7 @@ SubMainLoop
 
  rem mainloop  .........................................................................
 
-main 
+main
  scorecolor = $1E
  statusbarcolor = $00
  COLUBK = $00
@@ -128,7 +128,7 @@ mainsetup
  b = 0
  d = 1
  e = 0
- player0x = 90
+ player0x = (rand&127)+20 
  player0y = 5
  f = $64
  COLUPF = $00
@@ -208,7 +208,7 @@ mainloop
 
  ; queda da maca #2, se ela cair no chao, jogador perde uma das suas 7 vidas
  ; if player0y < 150 then player0y = player0y + d else statusbarlength = statusbarlength - 20 : player0y = 0 : player0x = (rand&127)+20
- if player0y > 100 then statusbarlength = statusbarlength - 20 : player0y = 5 : f = 100 : player0x = (rand&127)+20 : COLUBK = $0E : AUDV0 = 4 : AUDC0 = 8 : AUDF0 = 20
+ if player0y > 100 then statusbarlength = statusbarlength - 20 : player0y = 5 : f = $64 : player0x = (rand&127)+20 : COLUBK = $0E : AUDV0 = 4 : AUDC0 = 8 : AUDF0 = 20
  ; statusbarlength -> 20
 
  drawscreen

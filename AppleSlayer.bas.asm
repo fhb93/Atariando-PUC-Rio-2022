@@ -2213,9 +2213,13 @@ pflabel0
 
 	LDA #0
 	STA e
-.L084 ;  player0x  =  90
+.L084 ;  player0x  =   ( rand & 127 )  + 20
 
-	LDA #90
+; complex statement detected
+ jsr randomize
+	AND #127
+	CLC
+	ADC #20
 	STA player0x
 .L085 ;  player0y  =  5
 
@@ -2585,7 +2589,7 @@ pflabel1
 .
  ; 
 
-.L0112 ;  if player0y  >  100 then statusbarlength  =  statusbarlength  -  20  :  player0y  =  5  :  f  =  100  :  player0x  =   ( rand & 127 )  + 20  :  COLUBK  =  $0E  :  AUDV0  =  4  :  AUDC0  =  8  :  AUDF0  =  20
+.L0112 ;  if player0y  >  100 then statusbarlength  =  statusbarlength  -  20  :  player0y  =  5  :  f  =  $64  :  player0x  =   ( rand & 127 )  + 20  :  COLUBK  =  $0E  :  AUDV0  =  4  :  AUDC0  =  8  :  AUDF0  =  20
 
 	LDA #100
 	CMP player0y
@@ -2597,7 +2601,7 @@ pflabel1
 	STA statusbarlength
 	LDA #5
 	STA player0y
-	LDA #100
+	LDA #$64
 	STA f
 ; complex statement detected
  jsr randomize
