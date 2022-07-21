@@ -130,7 +130,7 @@ mainsetup
  e = 0
  player0x = 90
  player0y = 5
- f = 100
+ f = $64
  COLUPF = $00
  statusbarcolor = $CE
  statusbarlength = 140
@@ -182,7 +182,7 @@ mainloop
  AUDF0 = 3
 
  ; queda da maca #1
- if g > 1 then player0y = player0y + d : f = f - 1 :  g = 0
+ if g > 1 then player0y = player0y + d : f = f - $01 : g = 0
 
  ; fade out do corte
  if sounda > 0 then e = e + 1 : NUSIZ1 = $30
@@ -204,7 +204,7 @@ mainloop
  if joy0fire then COLUP1 = $FE : sounda = 4 : if missile1x < 130 then missile1x = missile1x + 8
 
  ; checagem se houve colisao e o jogador estava pressionando o botao de disparo
- if collision(player0, missile1) && joy0fire then score = score + f : f = 100 : goto cut
+ if collision(player0, missile1) && joy0fire then score = score + f : f = $64 : goto cut
 
  ; queda da maca #2, se ela cair no chao, jogador perde uma das suas 7 vidas
  ; if player0y < 150 then player0y = player0y + d else statusbarlength = statusbarlength - 20 : player0y = 0 : player0x = (rand&127)+20
