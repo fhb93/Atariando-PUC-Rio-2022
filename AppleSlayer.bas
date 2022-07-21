@@ -1,7 +1,7 @@
  rem Generated 7/20/2022 07:10:21 PM by Visual bB Version 1.0.0.568
  rem **********************************
- rem *<Ringo 2600>                    *
- rem *<description>                   *
+ rem *<Apple Slayer>                  *
+ rem *<Fruit Ninja like game>         *
  rem *<Felipe and Tomaz>              *
  rem *<contact info>                  *
  rem *<free>	                      *

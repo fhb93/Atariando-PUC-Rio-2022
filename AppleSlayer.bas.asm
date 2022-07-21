@@ -1810,9 +1810,9 @@ game
 
 .L01 ;  rem **********************************
 
-.L02 ;  rem *<Ringo 2600>                    *
+.L02 ;  rem *<Apple Slayer>                  *
 
-.L03 ;  rem *<description>                   *
+.L03 ;  rem *<Fruit Ninja like game>         *
 
 .L04 ;  rem *<Felipe and Tomaz>              *
 
