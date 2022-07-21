@@ -129,7 +129,7 @@ mainsetup
  d = 1
  e = 0
  player0x = 90
- player0y = 15
+ player0y = 5
  f = 100
  COLUPF = $00
  statusbarcolor = $CE
@@ -150,6 +150,7 @@ mainsetup
  ................................
 end
 
+mainsetup2
  player0:
         %00101100
         %01111110
@@ -179,7 +180,6 @@ mainloop
  AUDC0 = 8
  AUDF0 = 3
 
- 
  ; queda da maca #1
  if g > 1 then player0y = player0y + d : f = f - 1 :  g = 0
 
@@ -193,7 +193,7 @@ mainloop
  if b > 30 then b = 0 : d = d + 1
 
  ; movimentar a mira da espada
- if joy0right then if missile1x < 106 then missile1x = missile1x + 4
+ if joy0right then if missile1x < 146 then missile1x = missile1x + 4
  if joy0left then if missile1x > 14 then missile1x = missile1x - 4
  if joy0up then if missile1y > 16 then missile1y = missile1y - 2
  if joy0down then if missile1y < 148 then missile1y = missile1y + 2
@@ -203,11 +203,11 @@ mainloop
  if joy0fire then COLUP1 = $FE : sounda = 4 : if missile1x < 130 then missile1x = missile1x + 8
 
  ; checagem se houve colisao e o jogador estava pressionando o botao de disparo
- if collision(player0, missile1) && joy0fire then score = score + f : player0y = 0 : player0x = (rand&127)+20
+ if collision(player0, missile1) && joy0fire then score = score + f : f = 100 : goto cut
 
  ; queda da maca #2, se ela cair no chao, jogador perde uma das suas 7 vidas
  ; if player0y < 150 then player0y = player0y + d else statusbarlength = statusbarlength - 20 : player0y = 0 : player0x = (rand&127)+20
- if player0y > 100 then statusbarlength = statusbarlength - 20 : player0y = 0 : f = 100 : player0x = (rand&127)+20 : COLUBK = $0E
+ if player0y > 100 then statusbarlength = statusbarlength - 20 : player0y = 5 : f = 100 : player0x = (rand&127)+20 : COLUBK = $0E
 
  drawscreen
  NUSIZ1 = $10
@@ -217,6 +217,151 @@ mainloop
  if statusbarlength = 0 then goto gameover
 
  goto mainloop
+
+cut
+ h = h + 1
+ COLUP0 = $46
+ COLUP1 = $FE
+ NUSIZ1 = $30
+ if h = 3 then player0:
+        %00101100
+        %01111110
+        %11111111
+        %11111111
+        %11111111
+        %11111111
+        %11111111
+        %11111111
+        %01101110
+        %00011000
+        %00001100
+end
+ if h = 6 then player0:
+        %00101100
+        %01111110
+        %11111111
+        %11111111
+        %11111111
+        %00001111
+        %11111111
+        %11111111
+        %01101110
+        %00011000
+        %00001100
+end
+ if h = 9 then player0:
+        %00101100
+        %01111110
+        %11111111
+        %11111111
+        %11111111
+        %00000000
+        %11111111
+        %11111111
+        %01101110
+        %00011000
+        %00001100
+end
+ if h = 12 then player0:
+        %00101100
+        %01111110
+        %11111111
+        %11111111
+        %11111111
+        %00000000
+        %11111111
+        %11111111
+        %01101110
+        %00011000
+        %00001100
+end
+ if h = 15 then player0:
+        %00101100
+        %01111110
+        %11111111
+        %11111111
+        %11111111
+        %00000000
+        %11111111
+        %11111111
+        %01101110
+        %00011000
+        %00001100
+end
+ 
+ if h = 18 then player0:
+        %00000100
+        %00101010
+        %01010101
+        %10101010
+        %01010101
+        %00000000
+        %10101010
+        %01010101
+        %00101010
+        %00010000
+        %00001000
+end
+  
+ if h = 21 then player0:
+        %00000100
+        %00000000
+        %01010101
+        %00000000
+        %01010101
+        %00000000
+        %10101010
+        %00000000
+        %00101010
+        %00000000
+        %00001000
+end
+
+ if h = 24 then player0:
+        %00000000
+        %00000000
+        %01000100
+        %00000000
+        %00010001
+        %00000000
+        %10001000
+        %00000000
+        %00100010
+        %00000000
+        %00001000
+end
+ 
+ if h = 27 then player0:
+        %00000000
+        %00000000
+        %00000000
+        %00000000
+        %00010001
+        %00000000
+        %10001000
+        %00000000
+        %00000000
+        %00000000
+        %00001000
+end
+
+ if h = 30 then player0:
+        %00000000
+        %00000000
+        %00000000
+        %00000000
+        %00000001
+        %00000000
+        %10000000
+        %00000000
+        %00000000
+        %00000000
+        %00001000
+end
+
+ if h=30 then h = 0 : player0y = 5 : player0x = (rand&127)+20 : goto mainsetup2
+ drawscreen
+ goto cut
 
 gameover
  COLUP0 = $00
