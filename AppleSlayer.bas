@@ -15,7 +15,7 @@
  const scorefade = 0
  scorecolor = $1C
  const logo_color=$0E
- const logo_height=75
+ const logo_height=92
  COLUBK=$00
 
 
@@ -133,9 +133,10 @@ mainsetup
  f = 100
  COLUPF = $00
  statusbarcolor = $CE
- statusbarlength = 120
+ statusbarlength = 140
  NUSIZ1 = $10
- 
+ AUDV0 = 0
+
  playfield:
  ................................
  ................................
@@ -207,14 +208,16 @@ mainloop
 
  ; queda da maca #2, se ela cair no chao, jogador perde uma das suas 7 vidas
  ; if player0y < 150 then player0y = player0y + d else statusbarlength = statusbarlength - 20 : player0y = 0 : player0x = (rand&127)+20
- if player0y > 100 then statusbarlength = statusbarlength - 20 : player0y = 5 : f = 100 : player0x = (rand&127)+20 : COLUBK = $0E
+ if player0y > 100 then statusbarlength = statusbarlength - 20 : player0y = 5 : f = 100 : player0x = (rand&127)+20 : COLUBK = $0E : AUDV0 = 4 : AUDC0 = 8 : AUDF0 = 20
+ ; statusbarlength -> 20
 
  drawscreen
+
  NUSIZ1 = $10
  COLUBK = $00
 
  ; se o jogador perdeu as 7 vidas, fazer o game over mais epico depois
- if statusbarlength = 0 then goto gameover
+ if statusbarlength = 0 then b = 32 : goto gameover
 
  goto mainloop
 
@@ -367,7 +370,6 @@ gameover
  COLUP0 = $00
  COLUP1 = $00
  missile1y = 200
-
  COLUBK=$00      
 
  playfield:
@@ -398,7 +400,9 @@ end
   $0E
 end
  
+ AUDV0 = b : AUDC0 = 14 : AUDF0 = 20
  if joy0fire then counter = counter + 1 else counter = 0
+ if b > 0 then b = b - 1
  if counter > 50 then reboot
  if switchreset then reboot
 
