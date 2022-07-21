@@ -1806,7 +1806,7 @@ statustable ; warning: page-wrapping might cause issues
  .byte %11111110
 
 game
-.L00 ;  rem Generated 7/19/2022 12:42:29 PM by Visual bB Version 1.0.0.568
+.L00 ;  rem Generated 7/20/2022 07:10:21 PM by Visual bB Version 1.0.0.568
 
 .L01 ;  rem **********************************
 
@@ -2221,26 +2221,30 @@ pflabel0
 
 	LDA #15
 	STA player0y
-.L086 ;  COLUPF  =  $00
+.L086 ;  f  =  100
+
+	LDA #100
+	STA f
+.L087 ;  COLUPF  =  $00
 
 	LDA #$00
 	STA COLUPF
-.L087 ;  statusbarcolor  =  $CE
+.L088 ;  statusbarcolor  =  $CE
 
 	LDA #$CE
 	STA statusbarcolor
-.L088 ;  statusbarlength  =  120
+.L089 ;  statusbarlength  =  120
 
 	LDA #120
 	STA statusbarlength
-.L089 ;  NUSIZ1  =  $10
+.L090 ;  NUSIZ1  =  $10
 
 	LDA #$10
 	STA NUSIZ1
 .
  ; 
 
-.L090 ;  playfield:
+.L091 ;  playfield:
 
   ifconst pfres
 	  ldx #(11>pfres)*(pfres*pfwidth-1)+(11<=pfres)*43
@@ -2301,11 +2305,11 @@ pflabel1
 .
  ; 
 
-.L091 ;  player0:
+.L092 ;  player0:
 
-	LDX #<playerL091_0
+	LDX #<playerL092_0
 	STX player0pointerlo
-	LDA #>playerL091_0
+	LDA #>playerL092_0
 	STA player0pointerhi
 	LDA #10
 	STA player0height
@@ -2330,32 +2334,32 @@ pflabel1
 .
  ; 
 
-.L092 ;  g  =  g  +  1
+.L093 ;  g  =  g  +  1
 
 	INC g
-.L093 ;  counter  =  counter  +  1
+.L094 ;  counter  =  counter  +  1
 
 	INC counter
-.L094 ;  COLUP0  =  $46
+.L095 ;  COLUP0  =  $46
 
 	LDA #$46
 	STA COLUP0
-.L095 ;  COLUP1  =  $0E
+.L096 ;  COLUP1  =  $0E
 
 	LDA #$0E
 	STA COLUP1
 .
  ; 
 
-.L096 ;  AUDV0  =  sounda
+.L097 ;  AUDV0  =  sounda
 
 	LDA sounda
 	STA AUDV0
-.L097 ;  AUDC0  =  8
+.L098 ;  AUDC0  =  8
 
 	LDA #8
 	STA AUDC0
-.L098 ;  AUDF0  =  3
+.L099 ;  AUDF0  =  3
 
 	LDA #3
 	STA AUDF0
@@ -2368,11 +2372,11 @@ pflabel1
 .
  ; 
 
-.L099 ;  if g  >  1 then player0y  =  player0y  +  d  :  f  =  f  -  1  :  g  =  0
+.L0100 ;  if g  >  1 then player0y  =  player0y  +  d  :  f  =  f  -  1  :  g  =  0
 
 	LDA #1
 	CMP g
-     BCS .skipL099
+     BCS .skipL0100
 .condpart2
 	LDA player0y
 	CLC
@@ -2381,72 +2385,72 @@ pflabel1
 	DEC f
 	LDA #0
 	STA g
-.skipL099
+.skipL0100
 .
  ; 
 
 .
  ; 
 
-.L0100 ;  if sounda  >  0 then e  =  e  +  1  :  NUSIZ1  =  $30
+.L0101 ;  if sounda  >  0 then e  =  e  +  1  :  NUSIZ1  =  $30
 
 	LDA #0
 	CMP sounda
-     BCS .skipL0100
+     BCS .skipL0101
 .condpart3
 	INC e
 	LDA #$30
 	STA NUSIZ1
-.skipL0100
-.L0101 ;  if e  >  10 then e  =  0  :  sounda  =  sounda  -  1
+.skipL0101
+.L0102 ;  if e  >  10 then e  =  0  :  sounda  =  sounda  -  1
 
 	LDA #10
 	CMP e
-     BCS .skipL0101
+     BCS .skipL0102
 .condpart4
 	LDA #0
 	STA e
 	DEC sounda
-.skipL0101
-.
- ; 
-
-.
- ; 
-
-.L0102 ;  if counter  >  60 then b  =  b  +  1  :  counter  =  0
-
-	LDA #60
-	CMP counter
-     BCS .skipL0102
-.condpart5
-	INC b
-	LDA #0
-	STA counter
 .skipL0102
 .
  ; 
 
-.L0103 ;  if b  >  30 then b  =  0  :  d  =  d  +  1
+.
+ ; 
 
-	LDA #30
-	CMP b
+.L0103 ;  if counter  >  60 then b  =  b  +  1  :  counter  =  0
+
+	LDA #60
+	CMP counter
      BCS .skipL0103
-.condpart6
+.condpart5
+	INC b
 	LDA #0
-	STA b
-	INC d
+	STA counter
 .skipL0103
 .
  ; 
 
+.L0104 ;  if b  >  30 then b  =  0  :  d  =  d  +  1
+
+	LDA #30
+	CMP b
+     BCS .skipL0104
+.condpart6
+	LDA #0
+	STA b
+	INC d
+.skipL0104
 .
  ; 
 
-.L0104 ;  if joy0right then if missile1x  <  106 then missile1x  =  missile1x  +  4
+.
+ ; 
+
+.L0105 ;  if joy0right then if missile1x  <  106 then missile1x  =  missile1x  +  4
 
  bit SWCHA
-	BMI .skipL0104
+	BMI .skipL0105
 .condpart7
 	LDA missile1x
 	CMP #106
@@ -2457,11 +2461,11 @@ pflabel1
 	ADC #4
 	STA missile1x
 .skip7then
-.skipL0104
-.L0105 ;  if joy0left then if missile1x  >  14 then missile1x  =  missile1x  -  4
+.skipL0105
+.L0106 ;  if joy0left then if missile1x  >  14 then missile1x  =  missile1x  -  4
 
  bit SWCHA
-	BVS .skipL0105
+	BVS .skipL0106
 .condpart9
 	LDA #14
 	CMP missile1x
@@ -2472,12 +2476,12 @@ pflabel1
 	SBC #4
 	STA missile1x
 .skip9then
-.skipL0105
-.L0106 ;  if joy0up then if missile1y  >  16 then missile1y  =  missile1y  -  2
+.skipL0106
+.L0107 ;  if joy0up then if missile1y  >  16 then missile1y  =  missile1y  -  2
 
  lda #$10
  bit SWCHA
-	BNE .skipL0106
+	BNE .skipL0107
 .condpart11
 	LDA #16
 	CMP missile1y
@@ -2488,12 +2492,12 @@ pflabel1
 	SBC #2
 	STA missile1y
 .skip11then
-.skipL0106
-.L0107 ;  if joy0down then if missile1y  <  148 then missile1y  =  missile1y  +  2
+.skipL0107
+.L0108 ;  if joy0down then if missile1y  <  148 then missile1y  =  missile1y  +  2
 
  lda #$20
  bit SWCHA
-	BNE .skipL0107
+	BNE .skipL0108
 .condpart13
 	LDA missile1y
 	CMP #148
@@ -2504,7 +2508,7 @@ pflabel1
 	ADC #2
 	STA missile1y
 .skip13then
-.skipL0107
+.skipL0108
 .
  ; 
 
@@ -2514,10 +2518,10 @@ pflabel1
 .
  ; 
 
-.L0108 ;  if joy0fire then COLUP1  =  $FE  :  sounda  =  4  :  if missile1x  <  130 then missile1x  =  missile1x  +  8
+.L0109 ;  if joy0fire then COLUP1  =  $FE  :  sounda  =  4  :  if missile1x  <  130 then missile1x  =  missile1x  +  8
 
  bit INPT4
-	BMI .skipL0108
+	BMI .skipL0109
 .condpart15
 	LDA #$FE
 	STA COLUP1
@@ -2532,17 +2536,17 @@ pflabel1
 	ADC #8
 	STA missile1x
 .skip15then
-.skipL0108
+.skipL0109
 .
  ; 
 
 .
  ; 
 
-.L0109 ;  if collision(player0,missile1)  &&  joy0fire then score  =  score  +  f  :  player0y  =  0  :  player0x  =   ( rand & 127 )  + 20
+.L0110 ;  if collision(player0,missile1)  &&  joy0fire then score  =  score  +  f  :  player0y  =  0  :  player0x  =   ( rand & 127 )  + 20
 
 	bit 	CXM1P
-	BPL .skipL0109
+	BPL .skipL0110
 .condpart17
  bit INPT4
 	BMI .skip17then
@@ -2568,7 +2572,7 @@ pflabel1
 	ADC #20
 	STA player0x
 .skip17then
-.skipL0109
+.skipL0110
 .
  ; 
 
@@ -2578,14 +2582,11 @@ pflabel1
 .
  ; 
 
-.
- ; 
+.L0111 ;  if player0y  >  100 then statusbarlength  =  statusbarlength  -  20  :  player0y  =  0  :  f  =  100  :  player0x  =   ( rand & 127 )  + 20  :  COLUBK  =  $0E
 
-.L0110 ;  if player0y  >  150 then statusbarlength  =  statusbarlength  -  20  :  player0y  =  0  :  f  =  150  :  player0x  =   ( rand & 127 )  + 20  :  COLUBK  =  $0E
-
-	LDA #150
+	LDA #100
 	CMP player0y
-     BCS .skipL0110
+     BCS .skipL0111
 .condpart19
 	LDA statusbarlength
 	SEC
@@ -2593,7 +2594,7 @@ pflabel1
 	STA statusbarlength
 	LDA #0
 	STA player0y
-	LDA #150
+	LDA #100
 	STA f
 ; complex statement detected
  jsr randomize
@@ -2603,18 +2604,18 @@ pflabel1
 	STA player0x
 	LDA #$0E
 	STA COLUBK
-.skipL0110
+.skipL0111
 .
  ; 
 
-.L0111 ;  drawscreen
+.L0112 ;  drawscreen
 
  jsr drawscreen
-.L0112 ;  NUSIZ1  =  $10
+.L0113 ;  NUSIZ1  =  $10
 
 	LDA #$10
 	STA NUSIZ1
-.L0113 ;  COLUBK  =  $00
+.L0114 ;  COLUBK  =  $00
 
 	LDA #$00
 	STA COLUBK
@@ -2624,19 +2625,19 @@ pflabel1
 .
  ; 
 
-.L0114 ;  if statusbarlength  =  0 then goto gameover
+.L0115 ;  if statusbarlength  =  0 then goto gameover
 
 	LDA statusbarlength
 	CMP #0
-     BNE .skipL0114
+     BNE .skipL0115
 .condpart20
  jmp .gameover
 
-.skipL0114
+.skipL0115
 .
  ; 
 
-.L0115 ;  goto mainloop
+.L0116 ;  goto mainloop
 
  jmp .mainloop
 
@@ -2646,18 +2647,22 @@ pflabel1
 .gameover
  ; gameover
 
-.L0116 ;  COLUP0  =  $00
+.L0117 ;  COLUP0  =  $00
 
 	LDA #$00
 	STA COLUP0
-.L0117 ;  COLUP1  =  $00
+.L0118 ;  COLUP1  =  $00
 
 	LDA #$00
 	STA COLUP1
+.L0119 ;  missile1y  =  200
+
+	LDA #200
+	STA missile1y
 .
  ; 
 
-.L0118 ;  playfield:
+.L0120 ;  playfield:
 
   ifconst pfres
 	  ldx #(11>pfres)*(pfres*pfwidth-1)+(11<=pfres)*43
@@ -2718,7 +2723,7 @@ pflabel2
 .
  ; 
 
-.L0119 ;  pfcolors:
+.L0121 ;  pfcolors:
 
  lda # $2E
  sta COLUPF
@@ -2737,43 +2742,43 @@ pflabel2
 .
  ; 
 
-.L0120 ;  if joy0fire then counter  =  counter  +  1 else counter  =  0
+.L0122 ;  if joy0fire then counter  =  counter  +  1 else counter  =  0
 
  bit INPT4
-	BMI .skipL0120
+	BMI .skipL0122
 .condpart21
 	INC counter
  jmp .skipelse1
-.skipL0120
+.skipL0122
 	LDA #0
 	STA counter
 .skipelse1
-.L0121 ;  if counter  >  50 then reboot
+.L0123 ;  if counter  >  50 then reboot
 
 	LDA #50
 	CMP counter
-     BCS .skipL0121
+     BCS .skipL0123
 .condpart22
 	JMP ($FFFC)
-.skipL0121
-.L0122 ;  if switchreset then reboot
+.skipL0123
+.L0124 ;  if switchreset then reboot
 
  lda #1
  bit SWCHB
-	BNE .skipL0122
+	BNE .skipL0124
 .condpart23
 	JMP ($FFFC)
-.skipL0122
+.skipL0124
 .
  ; 
 
-.L0123 ;  drawscreen
+.L0125 ;  drawscreen
 
  jsr drawscreen
 .
  ; 
 
-.L0124 ;  goto gameover 
+.L0126 ;  goto gameover 
  jmp .gameover
  ifconst pfres
  if (<*) > (254-pfres*pfwidth)
@@ -2810,7 +2815,7 @@ pfcolorlabel13
 	.byte 0
 	repend
 	endif
-playerL091_0
+playerL092_0
 	.byte         %00101100
 	.byte         %01111110
 	.byte         %11111111

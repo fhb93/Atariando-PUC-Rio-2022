@@ -1,0 +1,26 @@
+﻿ playfield:
+ .............XXXXXXXXXXXXXXXXXXX
+ ...........XXXXXXXXXXXXXXXXXXXXX
+ ..........XXXXXXXXXXXXXXXXXXXXXX
+ ............XXXXXXXXXXXXXXXXXXXX
+ ..............XXXXXXXXXXXXXXXXXX
+ ...................XXXXXXXXXXXXX
+ ..........................X.X.X.
+ ...........................XXXXX
+ .............................XXX
+ ..............................XX
+ ..............................XX
+end
+ pfcolors:
+  $DC
+  $DC
+  $DC
+  $DC
+  $DC
+  $DC
+  $26
+  $26
+  $26
+  $26
+  $26
+end
